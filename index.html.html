@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валентинка 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .side-photo {
+            width: 250px;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            position: relative;
+        }
+
+        .side-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .side-photo img.active {
+            opacity: 1;
+        }
+
+        .message-box {
+            width: 250px;
+            height: 350px;
+            background: white;
+            border-radius: 20px;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .message-box h3 {
+            color: #ff1493;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .message-box p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .message-box .heart-icon {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-question {
+            color: #ff1493;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        h1 {
+            color: #ff1493;
+            font-size: 2em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 35px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ddd 0%, #eee 100%);
+            color: #666;
+        }
+
+        .btn-no:hover {
+            background: linear-gradient(135deg, #ccc 0%, #ddd 100%);
+        }
+
+        .success {
+            display: none;
+            animation: celebrate 0.6s ease;
+        }
+
+        @keyframes celebrate {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success h2 {
+            color: #ff1493;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .success p {
+            color: #666;
+            font-size: 1.3em;
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin: 20px 0;
+            display: inline-block;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive за телефони */
+        @media (max-width: 1000px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .side-photo, .message-box {
+                display: none;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .photo-frame {
+                width: 150px;
+                height: 150px;
+            }
+
+            .btn {
+                padding: 15px 25px;
+                font-size: 1em;
+            }
+
+            .success h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="main-wrapper">
+        <!-- ЛЯВО: Слайдшоу със снимки -->
+        <div class="side-photo" id="leftPhotos">
+            <!-- СЛОЖИ ТУК СНИМКИТЕ ЗА СЛАЙДШОУ -->
+            <img src="snimka.jpg" alt="Снимка 1" class="active">
+            <img src="snimka1.jpg" alt="Снимка 2">
+            <img src="snimka2.jpg" alt="Снимка 3">
+            <img src="snimka3.jpg" alt="Снимка 4">
+            <img src="snimka4.jpg" alt="Снимка 5">
+            <img src="snimka5.jpg" alt="Снимка 6">
+            <img src="snimka6.jpg" alt="Снимка 7">
+            <img src="snimka7.jpg" alt="Снимка 8">
+            <img src="snimka8.jpg" alt="Снимка 9">
+            <img src="snimka9.jpg" alt="Снимка 10">
+            <img src="snimka10.jpg" alt="Снимка 11">
+            <img src="snimka11.jpg" alt="Снимка 12">
+            <img src="snimka12.jpg" alt="Снимка 13">
+            <img src="snimka13.jpg" alt="Снимка 0">
+            <!-- Добави колкото искаш снимки -->
+        </div>
+
+        <!-- ЦЕНТЪР: Основен прозорец -->
+        <div class="container">
+            <div id="question">
+                <div class="photo-frame">
+                    <img src="snimka9.jpg" alt="Нашата снимка 💕">
+                </div>
+                
+                <h1 id="questionText">Ще ми бъдеш ли валентинка? 💕</h1>
+                
+                 <p class="main-question" id="mainQuestion" style="display: none;">Ще ми бъдеш ли валентинка? 💕</p>
+                <div class="buttons">
+                    <button class="btn btn-yes" id="yesBtn">Да 💖</button>
+                    <button class="btn btn-no" id="noBtn">Не</button>
+                </div>
+            </div>
+            
+            <div class="success" id="success">
+                <div class="photo-frame">
+                    <img src="snimka1.jpg" alt="Нашата снимка 💕">
+                </div>
+                <div class="emoji">🥰</div>
+                <h2>ХИХИХИ, Обичам те! 💕</h2>
+                <p> </p>
+            </div>
+        </div>
+
+        <!-- ДЯСНО: Послание -->
+        <div class="message-box">
+            <div class="heart-icon">💌</div>
+            <h3>Паточе,</h3>
+            <p>Ти си най-специалният човек в живота ми! 💕</p>
+            <p style="margin-top: 15px;">Обичам те безкрайно! 🥰</p>
+        </div>
+    </div>
+
+    <script>
+        // Създаване на летящи сърчица
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            heartsContainer.appendChild(heart);
+        }
+
+        // Слайдшоу за снимките отляво (1 сек таймер)
+        const leftPhotos = document.getElementById('leftPhotos');
+        const photos = leftPhotos.querySelectorAll('img');
+        let currentPhotoIndex = 0;
+
+        setInterval(() => {
+            photos[currentPhotoIndex].classList.remove('active');
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            photos[currentPhotoIndex].classList.add('active');
+        }, 1000); // 1 секунда
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const success = document.getElementById('success');
+        const questionText = document.getElementById('questionText');
+        const mainQuestion = document.getElementById('mainQuestion');
+
+        // Текстове при натискане на "Не"
+        const noTexts = [
+            "Ще ми бъдеш ли валентинка? 💕",
+            "Сигурна ли си? 🤔",
+            "Помисли добре... 💭",
+            "Но наистина ли си сигурна? 🥺",
+            "Аз мисля, че би искала... 💝",
+            "Моля те? 🙏",
+            "Няма НЕ! 😊"
+        ];
+
+        let noClickCount = 0;
+
+        yesBtn.addEventListener('click', () => {
+            question.style.display = 'none';
+            success.style.display = 'block';
+            
+            // Добавяне на много сърчица при успех
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = '💖';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '-50px';
+                    heart.style.fontSize = '2em';
+                    heart.style.zIndex = '999';
+                    heart.style.transition = 'all 2s ease-in';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.top = '100vh';
+                        heart.style.opacity = '0';
+                    }, 10);
+                    
+                    setTimeout(() => heart.remove(), 2000);
+                }, i * 50);
+            }
+        });
+
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            
+            // Показване на основния въпрос след първо кликване
+            if (noClickCount === 1) {
+                mainQuestion.style.display = 'block';
+            }
+            
+            // Променяне на текста
+            if (noClickCount < noTexts.length) {
+                questionText.textContent = noTexts[noClickCount];
+            }
+            
+            // Смаляване на бутона "Не"
+            const currentSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            const newSize = Math.max(currentSize * 0.80, 8);
+            noBtn.style.fontSize = newSize + 'px';
+            
+            const currentPadding = parseFloat(window.getComputedStyle(noBtn).padding);
+            const newPadding = Math.max(currentPadding * 0.75, 5);
+            noBtn.style.padding = newPadding + 'px';
+            
+            // Увеличаване на бутона "Да"
+            const currentYesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentYesSize * 1.33) + 'px';
+            
+            // Скриване на бутона "Не" след всички текстове
+            if (noClickCount >= 6) {
+                noBtn.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
