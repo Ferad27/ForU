@@ -244,18 +244,35 @@
 
         /* Responsive за телефони */
         @media (max-width: 1000px) {
+            body {
+                /* Позволяваме скролване, за да се вижда всичко едно под друго */
+                overflow-y: auto; 
+                align-items: flex-start;
+            }
+
             .main-wrapper {
+                /* Променяме подредбата на вертикална */
                 flex-direction: column;
+                gap: 30px;
+                padding-bottom: 50px;
             }
 
             .side-photo, .message-box {
-                display: none;
+                /* ТУК БЕШЕ display: none; - МАХАМЕ ГО, ЗА ДА СЕ ВИЖДАТ */
+                display: flex; 
+                width: 100%;
+                max-width: 250px; /* Запазваме твоя оригинален размер */
+                height: 350px;
             }
 
             .container {
+                /* Правим централния блок да не се свива твърде много */
+                width: 100%;
+                max-width: 90%;
                 padding: 30px 20px;
             }
 
+            /* Запазваме твоите промени за текстовете и рамките */
             h1 {
                 font-size: 1.5em;
             }
@@ -264,8 +281,7 @@
                 width: 150px;
                 height: 150px;
             }
-
-            .btn {
+              .btn {
                 padding: 15px 25px;
                 font-size: 1em;
             }
